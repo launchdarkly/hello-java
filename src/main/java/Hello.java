@@ -8,7 +8,7 @@ import static java.util.Collections.singletonList;
 public class Hello {
 
  public static void main(String... args) throws IOException {
-   LDClient client = new LDClient("YOUR_API_KEY");
+   LDClient client = new LDClient("YOUR_SDK_KEY");
 
    LDUser user = new LDUser.Builder("bob@example.com")
                            .firstName("Bob")
@@ -16,7 +16,7 @@ public class Hello {
                            .customString("groups", singletonList("beta_testers"))
                            .build();
 
-   boolean showFeature = client.toggle("YOUR_FEATURE_KEY", user, false);
+   boolean showFeature = client.boolVariation("YOUR_FEATURE_KEY", user, false);
 
    if (showFeature) {
     System.out.println("Showing your feature");
