@@ -18,9 +18,11 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.14</version>
         </dependency>
-
     </dependencies>
-
+    <properties>
+        <maven.compiler.source>7</maven.compiler.source>
+        <maven.compiler.target>7</maven.compiler.target>
+    </properties>
     <build>
         <plugins>
             <plugin>
