@@ -1,6 +1,6 @@
-import com.launchdarkly.client.LDClient;
-import com.launchdarkly.client.LDUser;
-import com.launchdarkly.client.value.LDValue;
+import com.launchdarkly.sdk.LDUser;
+import com.launchdarkly.sdk.LDValue;
+import com.launchdarkly.sdk.server.LDClient;
 
 import java.io.IOException;
 

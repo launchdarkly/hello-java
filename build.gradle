@@ -6,11 +6,13 @@ plugins {
 
 repositories {
     mavenCentral()
+    // Before LaunchDarkly release artifacts get synced to Maven Central they are here along with snapshots:
+    maven { url "https://oss.sonatype.org/content/groups/public/" }
 }
 
 allprojects {
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
 application {
@@ -18,7 +20,7 @@ application {
 }
 
 ext.versions = [
-    "sdk": "4.+", // will use the latest 4.x version
+    "sdk": "5.0.0-SNAPSHOT",
     "slf4j": "1.7.22"
 ]
 
