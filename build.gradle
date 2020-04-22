@@ -23,7 +23,7 @@ ext.versions = [
 ]
 
 dependencies {
-    implementation "com.launchdarkly:launchdarkly-java-server-sdk:4.+"
+    implementation "com.launchdarkly:launchdarkly-java-server-sdk:${versions.sdk}"
 
     // Adding slf4j-simple enables the basic console logging implementation of SLF4J. Most real
     // applications will use one of the other SLF4J adapters. See: http://www.slf4j.org/
