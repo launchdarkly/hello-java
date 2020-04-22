@@ -6,19 +6,35 @@ orbs:
 workflows:
   test:
     jobs:
-      - build-linux
+      - build-run-linux
       - build-windows
 
-# This CI build just ensures that the demo compiles correctly.
+# This CI build ensures that the demo both compiles and works correctly. For the runtime test,
+# we use an SDK key and flag key that are passed in via the CircleCI project configuration;
+# the flag is configured to return a true value.
 
 jobs:
-  build-linux:
+  build-run-linux:
     docker:
       - image: circleci/java
     steps:
       - checkout
-      - run: ./gradlew dependencies
-      - run: ./gradlew build
+      - run:
+          name: show dependency versions
+          command: ./gradlew dependencies
+      - run:
+          name: insert SDK key and flag key into demo code
+          command: |
+            sed -i.bak "s/SDK_KEY *= *\".*\"/SDK_KEY = \"${LD_DEMO_SDK_KEY}\"/" src/main/java/Hello.java
+            sed -i.bak "s/FEATURE_FLAG_KEY *= *\".*\"/FEATURE_FLAG_KEY = \"${LD_DEMO_FLAG_KEY}\"/" src/main/java/Hello.java
+      - run:
+          name: build demo
+          command: ./gradlew build
+      - run:
+          name: run demo
+          command: |
+            ./gradlew run | tee output.txt
+            grep "is true for this user" output.txt || (echo "Flag did not evaluate to expected true value" && exit 1)
 
   build-windows:
     executor:
