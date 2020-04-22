@@ -1,9 +1,21 @@
-### LaunchDarkly Sample Java Application  ###
-We've built a simple console application that demonstrates how LaunchDarkly's SDK works.  Below, you'll find the basic build procedure, but for more comprehensive instructions, you can visit your [Quickstart page](https://app.launchdarkly.com/quickstart#/).
-##### Build instructions  #####
-1. Make sure you have [Maven](https://maven.apache.org/download.cgi) installed. We've tested against Maven 3
-2. Create a new project
-3. Copy your SDK key and feature flag key from your LaunchDarkly dashboard into `main` 
-4. Make sure `pom.xml` is referencing the latest version of `launchdarkly-java-server-sdk`; you can see the latest release [here](https://github.com/launchdarkly/java-server-sdk/releases)
-5. Run `mvn clean compile assembly:single`
-6. Then run `java -jar target/hello-java-1.0-SNAPSHOT-jar-with-dependencies.jar`
+# LaunchDarkly Sample Java Application 
+
+We've built a simple console application that demonstrates how LaunchDarkly's SDK works.
+
+ Below, you'll find the basic build procedure, but for more comprehensive instructions, you can visit your [Quickstart page](https://app.launchdarkly.com/quickstart#/) or the [Java SDK reference guide](https://docs.launchdarkly.com/sdk/server-side/java).
+
+## Build instructions 
+
+This project uses [Gradle](https://gradle.org/). It requires that Java is already installed on your system (version 7 or higher). It will automatically use the latest release of the LaunchDarkly SDK with major version 4.
+
+1. Edit `src/main/java/Hello.java` and set the value of `SDK_KEY` to your LaunchDarkly SDK key. If there is an existing boolean feature flag in your LaunchDarkly project that you want to evaluate, set `FEATURE_FLAG_KEY` to the flag key.
+
+```java
+  static final String SDK_KEY = "1234567890abcdef";
+
+  static final String FEATURE_FLAG_KEY = "my-flag";
+```
+
+2. On the command line, run `./gradlew run` (or, on Windows, `gradlew run`).
+
+The demo should print `"Feature flag '<flag key>' is <true/false> for this user"`.

@@ -8,5 +8,6 @@
 *.iws
 .idea/
  
-# Maven
-target
+# Gradle
+.gradle
+build

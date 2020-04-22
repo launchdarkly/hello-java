@@ -1,30 +1,42 @@
 import com.launchdarkly.client.LDClient;
 import com.launchdarkly.client.LDUser;
+import com.launchdarkly.client.value.LDValue;
 
 import java.io.IOException;
 
-import static java.util.Collections.singletonList;
-
 public class Hello {
 
- public static void main(String... args) throws IOException {
-   LDClient client = new LDClient("YOUR_SDK_KEY");
+  // Set SDK_KEY to your LaunchDarkly SDK key before compiling
+  static final String SDK_KEY = "";
 
-   LDUser user = new LDUser.Builder("bob@example.com")
-                           .firstName("Bob")
-                           .lastName("Loblaw")
-                           .customString("groups", singletonList("beta_testers"))
-                           .build();
+  // Set FEATURE_FLAG_KEY to the feature flag key you want to evaluate
+  static final String FEATURE_FLAG_KEY = "YOUR_FEATURE_KEY";
 
-   boolean showFeature = client.boolVariation("YOUR_FEATURE_KEY", user, false);
+  public static void main(String... args) throws IOException {
+    if (SDK_KEY.equals("")) {
+      System.out.println("Please edit Hello.java to set SDK_KEY to your LaunchDarkly SDK key first");
+      System.exit(1);
+    }
 
-   if (showFeature) {
-    System.out.println("Showing your feature");
-   } else {
-    System.out.println("Not showing your feature");
-   }
+    LDClient client = new LDClient(SDK_KEY);
 
-   client.flush();
-   client.close();
- }
+    // Set up the user properties. This user should appear on your LaunchDarkly users dashboard
+    // soon after you run the demo.
+    LDUser user = new LDUser.Builder("bob@example.com")
+                            .firstName("Bob")
+                            .lastName("Loblaw")
+                            .custom("groups", LDValue.buildArray().add("beta_testers").build())
+                            .build();
+
+    boolean showFeature = client.boolVariation(FEATURE_FLAG_KEY, user, false);
+
+    System.out.println("Feature flag '" + FEATURE_FLAG_KEY + "' is " + showFeature + " for this user");
+
+    // Calling client.close() ensures that the SDK shuts down cleanly before the program exits.
+    // Unless you do this, the SDK may not have a chance to deliver analytics events to LaunchDarkly,
+    // so the user properties and the flag usage statistics may not appear on your dashboard. In a
+    // normal long-running application, events would be delivered automatically in the background
+    // and you would not need to close the client.
+    client.close();
+  }
 }
