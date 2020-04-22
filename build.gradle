@@ -1,0 +1,29 @@
+
+plugins {
+    id "java"
+    id "application"
+}
+
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
+application {
+    mainClassName = "Hello"
+}
+
+ext.versions = [
+    "sdk": "4.+", // will use the latest 4.x version
+    "slf4j": "1.7.22"
+]
+
+dependencies {
+    implementation "com.launchdarkly:launchdarkly-java-server-sdk:4.+"
+    implementation "org.slf4j:slf4j-api:${versions.slf4j}"
+    implementation "org.slf4j:slf4j-simple:${versions.slf4j}"
+}

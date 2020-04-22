@@ -1,0 +1,36 @@
+version: 2.1
+
+orbs:
+   win: circleci/windows@1.0.0
+
+workflows:
+  test:
+    jobs:
+      - build-linux
+      - build-windows
+
+# This CI build just ensures that the demo compiles correctly.
+
+jobs:
+  build-linux:
+    docker:
+      - image: circleci/java
+    steps:
+      - checkout
+      - run: ./gradlew dependencies
+      - run: ./gradlew build
+
+  build-test-windows:
+    executor:
+      name: win/vs2019
+      shell: powershell.exe
+    steps:
+      - checkout
+      - run:
+          name: install OpenJDK
+          command: |
+            $ProgressPreference = "SilentlyContinue"  # prevents console errors from CircleCI host
+            iwr -outf openjdk.msi https://developers.redhat.com/download-manager/file/java-11-openjdk-11.0.5.10-2.windows.redhat.x86_64.msi
+            Start-Process msiexec.exe -Wait -ArgumentList '/I openjdk.msi /quiet'
+      - run: .\gradlew.bat --no-daemon dependencies  # must use --no-daemon because CircleCI in Windows will hang if there's a daemon running
+      - run: .\gradlew.bat --no-daemon build  # must use --no-daemon because CircleCI in Windows will hang if there's a daemon running
