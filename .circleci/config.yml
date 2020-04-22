@@ -20,7 +20,7 @@ jobs:
       - run: ./gradlew dependencies
       - run: ./gradlew build
 
-  build-test-windows:
+  build-windows:
     executor:
       name: win/vs2019
       shell: powershell.exe
