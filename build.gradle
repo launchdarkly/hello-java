@@ -20,7 +20,7 @@ application {
 }
 
 ext.versions = [
-    "sdk": "5.0.0-SNAPSHOT",
+    "sdk": "5.+",
     "slf4j": "1.7.22"
 ]
 
