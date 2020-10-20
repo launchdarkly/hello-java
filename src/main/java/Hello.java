@@ -22,7 +22,8 @@ public class Hello {
 
     // Set up the user properties. This user should appear on your LaunchDarkly users dashboard
     // soon after you run the demo.
-    LDUser user = new LDUser.Builder("bob@example.com")
+    LDUser user = new LDUser.Builder("00000000-0000-0000-0000-000000000000")
+                            .email("bob@example.com")
                             .firstName("Bob")
                             .lastName("Loblaw")
                             .custom("groups", LDValue.buildArray().add("beta_testers").build())
