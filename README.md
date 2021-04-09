@@ -18,4 +18,4 @@ This project uses [Gradle](https://gradle.org/). It requires that Java is alread
 
 2. On the command line, run `./gradlew run` (or, on Windows, `gradlew run`).
 
-The demo should print `"Feature flag '<flag key>' is <true/false> for this user"`.
+You should see the message `"Feature flag '<flag key>' is <true/false> for this user"`.

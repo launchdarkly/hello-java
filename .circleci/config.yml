@@ -6,8 +6,20 @@ orbs:
 workflows:
   test:
     jobs:
-      - build-run-linux
+      - build-run-linux:
+          context: hello-world-demos
       - build-windows
+
+  test-daily:
+    triggers:
+    - schedule:
+        cron: "0 6 * * *"
+        filters:
+          branches:
+            only: master
+    jobs:
+    - build-run-linux:
+        context: hello-world-demos
 
 # This CI build ensures that the demo both compiles and works correctly. For the runtime test,
 # we use an SDK key and flag key that are passed in via the CircleCI project configuration;
@@ -25,8 +37,8 @@ jobs:
       - run:
           name: insert SDK key and flag key into demo code
           command: |
-            sed -i.bak "s/SDK_KEY *= *\".*\"/SDK_KEY = \"${LD_DEMO_SDK_KEY}\"/" src/main/java/Hello.java
-            sed -i.bak "s/FEATURE_FLAG_KEY *= *\".*\"/FEATURE_FLAG_KEY = \"${LD_DEMO_FLAG_KEY}\"/" src/main/java/Hello.java
+            sed -i.bak "s/SDK_KEY *= *\".*\"/SDK_KEY = \"${LD_HELLO_WORLD_SDK_KEY}\"/" src/main/java/Hello.java
+            sed -i.bak "s/FEATURE_FLAG_KEY *= *\".*\"/FEATURE_FLAG_KEY = \"${LD_HELLO_WORLD_FLAG_KEY_WITH_TRUE_VALUE}\"/" src/main/java/Hello.java
       - run:
           name: build demo
           command: ./gradlew build
