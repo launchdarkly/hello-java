@@ -10,6 +10,7 @@ public class Hello {
 
   // Set FEATURE_FLAG_KEY to the feature flag key you want to evaluate.
   static final String FEATURE_FLAG_KEY = "my-boolean-flag";
+  
   private static void showMessage(String s) {
     System.out.println("*** " + s);
     System.out.println();
