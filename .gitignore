@@ -12,3 +12,5 @@
 # Gradle
 .gradle
 build
+bin
+target

@@ -1,5 +1,6 @@
-import com.launchdarkly.sdk.LDUser;
-import com.launchdarkly.sdk.server.LDClient;
+import com.launchdarkly.logging.*;
+import com.launchdarkly.sdk.*;
+import com.launchdarkly.sdk.server.*;
 
 import java.io.IOException;
 
@@ -22,7 +23,12 @@ public class Hello {
       System.exit(1);
     }
 
-    LDClient client = new LDClient(SDK_KEY);
+    // Using Logs.basic() allows us to get simple console logging without configuring SLF4J.
+    LDConfig config = new LDConfig.Builder()
+      .logging(Components.logging(Logs.basic()))
+      .build();
+
+    LDClient client = new LDClient(SDK_KEY, config);
 
     if (client.isInitialized()) {
       showMessage("SDK successfully initialized!");
