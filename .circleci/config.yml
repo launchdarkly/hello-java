@@ -46,7 +46,7 @@ jobs:
           name: run demo
           command: |
             ./gradlew run | tee output.txt
-            grep "is true for this user" output.txt || (echo "Flag did not evaluate to expected true value" && exit 1)
+            grep "is true for this context" output.txt || (echo "Flag did not evaluate to expected true value" && exit 1)
 
   build-windows:
     executor:
