@@ -6,7 +6,7 @@ We've built a simple console application that demonstrates how LaunchDarkly's SD
 
 ## Build instructions 
 
-This project uses [Gradle](https://gradle.org/). It requires that Java is already installed on your system (version 8 or higher). It will automatically use the latest release of the LaunchDarkly SDK with major version 5.
+This project uses [Gradle](https://gradle.org/). It requires that Java is already installed on your system (version 8 or higher). It will automatically use the latest release of the LaunchDarkly SDK with major version 6.
 
 1. Edit `src/main/java/Hello.java` and set the value of `SDK_KEY` to your LaunchDarkly SDK key. If there is an existing boolean feature flag in your LaunchDarkly project that you want to evaluate, set `FEATURE_FLAG_KEY` to the flag key.
 
@@ -18,4 +18,4 @@ This project uses [Gradle](https://gradle.org/). It requires that Java is alread
 
 2. On the command line, run `./gradlew run` (or, on Windows, `gradlew run`).
 
-You should see the message `"Feature flag '<flag key>' is <true/false> for this user"`.
+You should see the message `"Feature flag '<flag key>' is <true/false> for this context"`.

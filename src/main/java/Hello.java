@@ -1,8 +1,5 @@
-import com.launchdarkly.logging.*;
 import com.launchdarkly.sdk.*;
 import com.launchdarkly.sdk.server.*;
-
-import java.io.IOException;
 
 public class Hello {
 
@@ -17,15 +14,14 @@ public class Hello {
     System.out.println();
   }
 
-  public static void main(String... args) throws IOException {
+  public static void main(String... args) throws Exception {
     if (SDK_KEY.equals("")) {
       showMessage("Please edit Hello.java to set SDK_KEY to your LaunchDarkly SDK key first");
       System.exit(1);
     }
 
-    // Using Logs.basic() allows us to get simple console logging without configuring SLF4J.
     LDConfig config = new LDConfig.Builder()
-      .logging(Components.logging(Logs.basic()))
+      .events(Components.noEvents())
       .build();
 
     LDClient client = new LDClient(SDK_KEY, config);
@@ -37,20 +33,20 @@ public class Hello {
       System.exit(1);
     }
     
-    // Set up the user properties. This user should appear on your LaunchDarkly users dashboard
-    // soon after you run the demo.
-    LDUser user = new LDUser.Builder("example-user-key")
+    // Set up the evaluation context. This context should appear on your LaunchDarkly contexts
+    // dashboard soon after you run the demo.
+    LDContext context = LDContext.builder("example-user-key")
                             .name("Sandy")
                             .build();
 
-    boolean flagValue = client.boolVariation(FEATURE_FLAG_KEY, user, false);
+    boolean flagValue = client.boolVariation(FEATURE_FLAG_KEY, context, false);
 
-    showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + flagValue + " for this user");
+    showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + flagValue + " for this context");
 
     // Here we ensure that the SDK shuts down cleanly and has a chance to deliver analytics
     // events to LaunchDarkly before the program exits. If analytics events are not delivered,
-    // the user properties and flag usage statistics will not appear on your dashboard. In a
-    // normal long-running application, the SDK would continue running and events would be
+    // the context attributes and flag usage statistics will not appear on your dashboard. In
+    // a normal long-running application, the SDK would continue running and events would be
     // delivered automatically in the background.
     client.close();
   }
