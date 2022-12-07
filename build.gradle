@@ -20,7 +20,7 @@ application {
 }
 
 ext.versions = [
-    "sdk": "6.0.0-SNAPSHOT"  // TEMPORARY - change to "6+" after release
+    "sdk": "6+"
 ]
 
 dependencies {
