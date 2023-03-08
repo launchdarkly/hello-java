@@ -25,4 +25,5 @@ ext.versions = [
 
 dependencies {
     implementation "com.launchdarkly:launchdarkly-java-server-sdk:${versions.sdk}"
+    implementation "com.launchdarkly:launchdarkly-java-server-sdk-redis-store:3+"
 }

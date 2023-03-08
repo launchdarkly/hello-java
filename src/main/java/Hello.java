@@ -1,13 +1,15 @@
 import com.launchdarkly.sdk.*;
 import com.launchdarkly.sdk.server.*;
+import com.launchdarkly.sdk.server.integrations.*;
+
+import java.net.URI;
 
 public class Hello {
-
   // Set SDK_KEY to your LaunchDarkly SDK key.
-  static final String SDK_KEY = "";
+  static final String SDK_KEY = "Redis doesn't need SDK key";
 
   // Set FEATURE_FLAG_KEY to the feature flag key you want to evaluate.
-  static final String FEATURE_FLAG_KEY = "my-boolean-flag";
+  static final String FEATURE_FLAG_KEY = "java-bug-boolean-flag";
   
   private static void showMessage(String s) {
     System.out.println("*** " + s);
@@ -21,6 +23,12 @@ public class Hello {
     }
 
     LDConfig config = new LDConfig.Builder()
+      .dataStore(
+        Components.persistentDataStore(
+            Redis.dataStore().uri(URI.create("redis://127.0.0.1:6379"))
+        )
+      )
+      .dataSource(Components.externalUpdatesOnly())
       .events(Components.noEvents())
       .build();
 
@@ -35,13 +43,17 @@ public class Hello {
     
     // Set up the evaluation context. This context should appear on your LaunchDarkly contexts
     // dashboard soon after you run the demo.
-    LDContext context = LDContext.builder("example-user-key")
-                            .name("Sandy")
+    LDContext context = LDContext.builder("lchantest")
+                            .name("Louis").set("email", "fake@example.com")
                             .build();
 
     boolean flagValue = client.boolVariation(FEATURE_FLAG_KEY, context, false);
 
     showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + flagValue + " for this context");
+
+    EvaluationDetail<Integer> detail = client.intVariationDetail("int-flag", context, 777);
+
+    showMessage("Detail int-flag " + detail.toString());
 
     // Here we ensure that the SDK shuts down cleanly and has a chance to deliver analytics
     // events to LaunchDarkly before the program exits. If analytics events are not delivered,
