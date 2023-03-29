@@ -25,11 +25,12 @@ public class Hello {
     LDConfig config = new LDConfig.Builder()
       .dataStore(
         Components.persistentDataStore(
-            Redis.dataStore().uri(URI.create("redis://127.0.0.1:6379"))
+            Redis.dataStore().uri(URI.create("redis://127.0.0.1:6379")).prefix("pre")
         )
       )
       .dataSource(Components.externalUpdatesOnly())
-      .events(Components.noEvents())
+      .serviceEndpoints(Components.serviceEndpoints().events("http://localhost:20080"))
+      .diagnosticOptOut(true)
       .build();
 
     LDClient client = new LDClient(SDK_KEY, config);
@@ -61,5 +62,8 @@ public class Hello {
     // a normal long-running application, the SDK would continue running and events would be
     // delivered automatically in the background.
     client.close();
+
+    // Wait a bit so the client has time to flush the event to the events URL.
+    Thread.sleep(10000);
   }
 }
