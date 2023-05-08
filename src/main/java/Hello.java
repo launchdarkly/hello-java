@@ -20,9 +20,7 @@ public class Hello {
       System.exit(1);
     }
 
-    LDConfig config = new LDConfig.Builder()
-      .events(Components.noEvents())
-      .build();
+    LDConfig config = new LDConfig.Builder().build();
 
     LDClient client = new LDClient(SDK_KEY, config);
 
