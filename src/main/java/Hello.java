@@ -28,11 +28,16 @@ public class Hello {
   public static void main(String... args) throws Exception {
     LDConfig config = new LDConfig.Builder().build();
 
+    if (SDK_KEY == null || SDK_KEY.equals("")) {
+      showMessage("Please edit Hello.java to set SDK_KEY to your LaunchDarkly SDK key first.");
+      System.exit(1);
+    }
+
     final LDClient client = new LDClient(SDK_KEY, config);
     if (client.isInitialized()) {
       showMessage("SDK successfully initialized!");
     } else {
-      showMessage("SDK failed to initialize");
+      showMessage("SDK failed to initialize.  Please check your internet connection and SDK credential for any typo.");
       System.exit(1);
     }
 
@@ -53,7 +58,6 @@ public class Hello {
     // We set up a flag change listener so you can see flag changes as you change
     // the flag rules.
     client.getFlagTracker().addFlagChangeListener(event -> {
-      showMessage("Feature flag '" + event.getKey() + "' has changed.");
       if (event.getKey().equals(FEATURE_FLAG_KEY)) {
         boolean value = client.boolVariation(FEATURE_FLAG_KEY, context, false);
         showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + value + " for this context");
