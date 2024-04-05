@@ -17,15 +17,23 @@ public class Hello {
   }
 
   private static void printLogo() {
-    showMessage("\n  _                           _     ____             _    _       \n" + //
-                " | |    __ _ _   _ _ __   ___| |__ |  _ \\  __ _ _ __| | _| |_   _ \n" + //
-                " | |   / _` | | | | '_ \\ / __| '_ \\| | | |/ _` | '__| |/ / | | | |\n" + //
-                " | |__| (_| | |_| | | | | (__| | | | |_| | (_| | |  |   <| | |_| |\n" + //
-                " |_____\\__,_|\\__,_|_| |_|\\___|_| |_|____/ \\__,_|_|  |_|\\_\\_|\\__, |\n" + //
-                "                                                            |___/ ");
+    showMessage("\n        ██       \n" +
+                "          ██     \n" +
+                "      ████████   \n" +
+                "         ███████ \n" +
+                "██ LAUNCHDARKLY █\n" +
+                "         ███████ \n" +
+                "      ████████   \n" +
+                "          ██     \n" +
+                "        ██       \n");
   }
 
   public static void main(String... args) throws Exception {
+    // CI Mode (./gradlew run --args="CI")
+    boolean CIMode = args.length > 0 && args[0].equals("CI");
+
+    System.out.println(CIMode);
+
     LDConfig config = new LDConfig.Builder().build();
 
     if (SDK_KEY == null || SDK_KEY.equals("")) {
@@ -53,6 +61,11 @@ public class Hello {
 
     if (flagValue) {
       printLogo();
+    }
+
+    //If this is building for CI, we don't need to keep running the Hello App continously.
+    if(CIMode) {
+      System.exit(0);
     }
 
     // We set up a flag change listener so you can see flag changes as you change
