@@ -6,7 +6,7 @@ import com.launchdarkly.sdk.server.*;
 public class Hello {
 
   // Set SDK_KEY to your LaunchDarkly SDK key.
-  static final String SDK_KEY = "";
+  static String SDK_KEY = "";
 
   // Set FEATURE_FLAG_KEY to the feature flag key you want to evaluate.
   static final String FEATURE_FLAG_KEY = "sample-feature";
@@ -32,12 +32,16 @@ public class Hello {
     // CI Mode (./gradlew run --args="CI")
     boolean CIMode = args.length > 0 && args[0].equals("CI");
 
-    System.out.println(CIMode);
+    // Get SDK Key from env variable LD_SDK_KEY
+    String envSDKKey = System.getenv("LD_SDK_KEY");
+    if(envSDKKey != null) {
+      SDK_KEY = envSDKKey;
+    }
 
     LDConfig config = new LDConfig.Builder().build();
 
     if (SDK_KEY == null || SDK_KEY.equals("")) {
-      showMessage("Please edit Hello.java to set SDK_KEY to your LaunchDarkly SDK key first.");
+      showMessage("Please set the LD_SDK_KEY environment variable or edit Hello.java to set SDK_KEY to your LaunchDarkly SDK key first.");
       System.exit(1);
     }
 
