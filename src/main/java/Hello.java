@@ -9,7 +9,7 @@ public class Hello {
   static String SDK_KEY = "";
 
   // Set FEATURE_FLAG_KEY to the feature flag key you want to evaluate.
-  static final String FEATURE_FLAG_KEY = "sample-feature";
+  static String FEATURE_FLAG_KEY = "sample-feature";
   
   private static void showMessage(String s) {
     System.out.println("*** " + s);
@@ -29,13 +29,23 @@ public class Hello {
   }
 
   public static void main(String... args) throws Exception {
-    // CI Mode (./gradlew run --args="CI")
-    boolean CIMode = args.length > 0 && args[0].equals("CI");
+    // Set this environment variable to skip the loop process and evaluate the flag
+    // a single time.
+    boolean CIMode = false;
+    String ci = System.getenv("CI");
+    if(ci != null) {
+      CIMode = true;
+    }
 
     // Get SDK Key from env variable LD_SDK_KEY
-    String envSDKKey = System.getenv("LD_SDK_KEY");
+    String envSDKKey = System.getenv("LAUNCHDARKLY_SERVER_KEY");
     if(envSDKKey != null) {
       SDK_KEY = envSDKKey;
+    }
+
+    String envFlagKey = System.getenv("LAUNCHDARKLY_FLAG_KEY");
+    if(envFlagKey != null) {
+      FEATURE_FLAG_KEY = envFlagKey;
     }
 
     LDConfig config = new LDConfig.Builder().build();
