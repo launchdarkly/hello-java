@@ -31,13 +31,9 @@ public class Hello {
   public static void main(String... args) throws Exception {
     // Set this environment variable to skip the loop process and evaluate the flag
     // a single time.
-    boolean CIMode = false;
-    String ci = System.getenv("CI");
-    if(ci != null) {
-      CIMode = true;
-    }
+    boolean CIMode = System.getenv("CI") != null;
 
-    // Get SDK Key from env variable LD_SDK_KEY
+    // Get SDK Key from env variable LAUNCHDARKLY_SERVER_KEY
     String envSDKKey = System.getenv("LAUNCHDARKLY_SERVER_KEY");
     if(envSDKKey != null) {
       SDK_KEY = envSDKKey;
@@ -51,7 +47,7 @@ public class Hello {
     LDConfig config = new LDConfig.Builder().build();
 
     if (SDK_KEY == null || SDK_KEY.equals("")) {
-      showMessage("Please set the LD_SDK_KEY environment variable or edit Hello.java to set SDK_KEY to your LaunchDarkly SDK key first.");
+      showMessage("Please set the LAUNCHDARKLY_SERVER_KEY environment variable or edit Hello.java to set SDK_KEY to your LaunchDarkly SDK key first.");
       System.exit(1);
     }
 

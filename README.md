@@ -8,10 +8,10 @@ Below, you'll find the basic build procedure, but for more comprehensive instruc
 
 This project uses [Gradle](https://gradle.org/). It requires that Java is already installed on your system (version 8 or higher). It will automatically use the latest release of the LaunchDarkly SDK with major version 7.
 
-1. Set the value of environment variable `LD_SDK_KEY` to your LaunchDarkly SDK key. If there is an existing boolean feature flag in your LaunchDarkly project that you want to evaluate, edit `src/main/java/Hello.java` and set `FEATURE_FLAG_KEY` in code to the flag key.
+1. Set the value of environment variable `LAUNCHDARKLY_SERVER_KEY` to your LaunchDarkly SDK key. If there is an existing boolean feature flag in your LaunchDarkly project that you want to evaluate, edit `src/main/java/Hello.java` and set `FEATURE_FLAG_KEY` in code to the flag key.
 
 ```sh
-  export LD_SDK_KEY=1234567890abcdef
+  export LAUNCHDARKLY_SERVER_KEY=1234567890abcdef
 ```
 
 ```java
