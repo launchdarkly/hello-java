@@ -16,7 +16,7 @@ public class Hello {
     System.out.println();
   }
 
-  private static void printLogo() {
+  private static void showBanner() {
     showMessage("\n        ██       \n" +
                 "          ██     \n" +
                 "      ████████   \n" +
@@ -70,7 +70,7 @@ public class Hello {
     showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + flagValue + " for this context");
 
     if (flagValue) {
-      printLogo();
+      showBanner();
     }
 
     //If this is building for CI, we don't need to keep running the Hello App continously.
@@ -80,17 +80,14 @@ public class Hello {
 
     // We set up a flag change listener so you can see flag changes as you change
     // the flag rules.
-    client.getFlagTracker().addFlagChangeListener(event -> {
-      if (event.getKey().equals(FEATURE_FLAG_KEY)) {
-        boolean value = client.boolVariation(FEATURE_FLAG_KEY, context, false);
-        showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + value + " for this context");
+    client.getFlagTracker().addFlagValueChangeListener(FEATURE_FLAG_KEY, context, event -> {
+        showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + event.getNewValue() + " for this context");
 
-        if (value) {
-          printLogo();
+        if (event.getNewValue().booleanValue()) {
+          showBanner();
         }
-      }
     });
-    showMessage("Listening for feature flag changes.  Use Ctrl+C to terminate.");
+    showMessage("Listening for feature flag changes.");
 
     // Here we ensure that when the application terminates, the SDK shuts down
     // cleanly and has a chance to deliver analytics events to LaunchDarkly.
