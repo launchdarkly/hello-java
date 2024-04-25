@@ -1,4 +1,4 @@
-# LaunchDarkly Sample Java Application
+# LaunchDarkly sample Java application
 
 We've built a simple console application that demonstrates how LaunchDarkly's SDK works.
 
@@ -20,4 +20,4 @@ This project uses [Gradle](https://gradle.org/). It requires that Java is alread
 
 2. On the command line, run `./gradlew run` (or, on Windows, `gradlew run`).
 
-You should see the message `"Feature flag '<flag key>' is <true/false> for this context"`.
+You should receive the message "The <flagKey> feature flag evaluates to <flagValue>." The application will run continuously and react to the flag changes in LaunchDarkly.
