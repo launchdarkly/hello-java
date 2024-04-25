@@ -67,7 +67,7 @@ public class Hello {
 
     // Evaluate the feature flag for this context.
     boolean flagValue = client.boolVariation(FEATURE_FLAG_KEY, context, false);
-    showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + flagValue + " for this context");
+    showMessage("The '" + FEATURE_FLAG_KEY + "' feature flag evaluates to " + flagValue + ".");
 
     if (flagValue) {
       showBanner();
@@ -81,7 +81,7 @@ public class Hello {
     // We set up a flag change listener so you can see flag changes as you change
     // the flag rules.
     client.getFlagTracker().addFlagValueChangeListener(FEATURE_FLAG_KEY, context, event -> {
-        showMessage("Feature flag '" + FEATURE_FLAG_KEY + "' is " + event.getNewValue() + " for this context");
+        showMessage("The '" + FEATURE_FLAG_KEY + "' feature flag evaluates to " + event.getNewValue() + ".");
 
         if (event.getNewValue().booleanValue()) {
           showBanner();
