@@ -1,4 +1,4 @@
-# LaunchDarkly Sample Java Application
+# LaunchDarkly sample Java application
 
 We've built a simple console application that demonstrates how LaunchDarkly's SDK works.
 
