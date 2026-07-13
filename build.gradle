@@ -10,13 +10,13 @@ repositories {
     maven { url "https://oss.sonatype.org/content/groups/public/" }
 }
 
-allprojects {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 application {
-    mainClassName = "Hello"
+    mainClass = "Hello"
 }
 
 ext.versions = [
