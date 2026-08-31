@@ -7,7 +7,7 @@ plugins {
 repositories {
     mavenCentral()
     // Before LaunchDarkly release artifacts get synced to Maven Central they are here along with snapshots:
-    maven { url "https://oss.sonatype.org/content/groups/public/" }
+    maven { url = "https://oss.sonatype.org/content/groups/public/" }
 }
 
 java {
