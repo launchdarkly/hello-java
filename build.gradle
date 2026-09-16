@@ -6,8 +6,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    // Before LaunchDarkly release artifacts get synced to Maven Central they are here along with snapshots:
-    maven { url = "https://oss.sonatype.org/content/groups/public/" }
 }
 
 java {
@@ -20,7 +18,7 @@ application {
 }
 
 ext.versions = [
-    "sdk": "7+"
+    "sdk": "[7.16.0,8.0.0)"
 ]
 
 dependencies {
